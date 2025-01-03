@@ -794,7 +794,6 @@ function esVisible(elemento) {
     if ($(elemento).is(':visible') && $(elemento).css("visibility") != "hidden" && $(elemento).css("opacity") > 0) {
         esVisible = true;
     }
-
     return esVisible;
 }
 
