@@ -32,11 +32,17 @@
 {% endblock %}
 {% block body %}
     <div>
+
         {#        <a class="hiddenanchor" id="signup"></a> #}
         {#        <a class="hiddenanchor" id="signin"></a> #}
         <div class="login_wrapper">
+
             <div class="animate form login_form">
                 <section class="login_content">
+                    {% if error %}
+                        <h1>Error</h1>
+                        <div class="alert alert-danger">{{ error }}</div>
+                    {% endif %}
                     <form method="post">
                         <h1>PANEL GENERAL <br/>
                             <small class="pt-2">{{ base.siteName }}</small></h1>
@@ -48,7 +54,7 @@
                         <div>
                             <label for="inputPassword">Contraseña</label>
                             <input type="password" name="password" id="inputPassword" class="form-control" required>
-                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('login') }}">
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
                         </div>
                         <div>
                             <label>

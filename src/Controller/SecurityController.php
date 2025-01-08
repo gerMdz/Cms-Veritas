@@ -19,24 +19,34 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 
 class SecurityController extends AbstractController
 {
-    #[Route(path: '/admin/ingreso', name: 'app_login')]
-    public function login(AuthenticationUtils $authenticationUtils): Response
+
+    public function __construct(
+        readonly CsrfTokenManagerInterface $csrfTokenManager)
     {
+    }
+
+    #[Route(path: '/admin/ingreso', name: 'app_login')]
+    public function login(AuthenticationUtils $authenticationUtils, Request $request): Response
+    {
+
         try {
-            $em = $this->container->get('doctrine');
+            $this->container->get('doctrine');
         } catch (NotFoundExceptionInterface|ContainerExceptionInterface) {
         }
         $error = $authenticationUtils->getLastAuthenticationError();
+        // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('admin/security/login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
+            'csrf_token' => $this->container->get('security.csrf.token_manager')->getToken('authenticate'),
         ]);
     }
 
@@ -147,5 +157,17 @@ class SecurityController extends AbstractController
         return $this->render('security/registerVoluntarioReserva.html.twig', [
             'registroForm' => $form,
         ]);
+    }
+
+    #[Route(path: '/test/route/index', name: 'app_test_route')]
+    public function testRoute(Request $request)
+    {
+        // Establecer una variable de sesión
+        $request->getSession()->set('test', 'Hello, session!');
+
+        // Obtener la variable de sesión
+        $sessionValue = $request->getSession()->get('test');
+
+        return new Response($sessionValue); // Deberías ver 'Hello, session!' en esta ruta
     }
 }
