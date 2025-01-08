@@ -40,13 +40,11 @@ class SecurityController extends AbstractController
         } catch (NotFoundExceptionInterface|ContainerExceptionInterface) {
         }
         $error = $authenticationUtils->getLastAuthenticationError();
-        // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('admin/security/login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
-            'csrf_token' => $this->container->get('security.csrf.token_manager')->getToken('authenticate'),
         ]);
     }
 
