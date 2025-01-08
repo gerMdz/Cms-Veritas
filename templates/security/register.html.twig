@@ -1,5 +1,5 @@
 {% extends 'base_material_kit.twig' %}
-{% form_theme regristroForm _self %}
+{% form_theme registroForm _self %}
 {% block form_row %}
     {%- set widget_attr = {} -%}
     {%- if help is not empty -%}
@@ -69,7 +69,7 @@
     }) }}
     {{ form_row(regristroForm.aceptaTerminos) }}
     <button class="btn btn-lg btn-primary" type="submit">
-        Resgistrar
+        Registrar
     </button>
     {% if(is_granted("ROLE_ADMIN_RESERVA")) %}
         {{ form_row(regristroForm.roles) }}
