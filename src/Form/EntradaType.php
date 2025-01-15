@@ -18,6 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -89,23 +90,23 @@ class EntradaType extends AbstractType
                     ],
                 ]
             )
-            ->add('titulo', CKEditorType::class,
+            ->add('titulo', TextareaType::class,
                 [
                     'required' => true,
-                    'config' => [
-                        'uiColor' => '#ffffff',
+//                    'config' => [
+//                        'uiColor' => '#ffffff',
 //                    'toolbar' => 'full',
-                        'language' => 'es',
-                        'input_sync' => true,
-                    ],
+//                        'language' => 'es',
+//                        'input_sync' => true,
+//                    ],
                     'label_attr' => [
                         'class' => 'text-primary',
                     ],
                     'help' => 'Título de la entrada, se muestra en pantalla',
                     'attr' => [
-                        'required' => true,
-
-//                        'class' => 'form-control',
+                        'required' => false,
+                        'rows' => 20,
+                        'class' => 'ckeditor',
                     ],
                 ]
             )
@@ -130,22 +131,22 @@ class EntradaType extends AbstractType
             )
             ->add(
                 'contenido',
-                CKEditorType::class,
+                TextareaType::class,
                 [
                     'required' => false,
-                    'config' => [
-                        'uiColor' => '#ffffff',
+//                    'config' => [
+//                        'uiColor' => '#ffffff',
 //                    'toolbar' => 'full',
-                        'language' => 'es',
-                    ],
+//                        'language' => 'es',
+//                    ],
                     'label_attr' => [
                         'class' => 'text-primary',
                     ],
                     'help' => 'Contenido de la entrada, se muestra en pantalla',
                     'attr' => [
                         'required' => false,
-                        'rows' => 10,
-//                    'class' => 'form-control',
+                        'rows' => 20,
+                        'class' => 'form-control',
                     ],
                 ]
             )
@@ -252,7 +253,7 @@ class EntradaType extends AbstractType
                 EntityType::class,
                 [
                     'class' => User::class,
-                    'choice_label' => fn (User $user) => sprintf('(%s) %s', $user->getPrimerNombre(), $user->getEmail()),
+                    'choice_label' => fn(User $user) => sprintf('(%s) %s', $user->getPrimerNombre(), $user->getEmail()),
                     'placeholder' => 'Seleccione Autor',
                     'invalid_message' => 'Por favor ingrese un autor',
                     'attr' => [
@@ -265,7 +266,7 @@ class EntradaType extends AbstractType
                 EntityType::class,
                 [
                     'class' => ModelTemplate::class,
-                    'query_builder' => fn (ModelTemplateRepository $er) => $er->findByTypeEntrada(),
+                    'query_builder' => fn(ModelTemplateRepository $er) => $er->findByTypeEntrada(),
                     'help' => 'Opcional, llama a un template específico, debe estar en sections creado',
                     'required' => false,
                     'attr' => [
@@ -362,7 +363,6 @@ class EntradaType extends AbstractType
                     'class' => ' text-secondary',
                 ],
             ])
-
             ->add('cssClass', TextType::class,
                 [
                     'help_attr' => [
@@ -409,8 +409,7 @@ class EntradaType extends AbstractType
                 'attr' => [
                     'class' => 'select2-enable',
                 ],
-            ])
-        ; // ; Final Builder
+            ]); // ; Final Builder
     }
 
     public function configureOptions(OptionsResolver $resolver): void

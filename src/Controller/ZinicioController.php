@@ -12,7 +12,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class ZinicioController extends AbstractController
@@ -96,11 +97,9 @@ class ZinicioController extends AbstractController
     }
 
     #[Route(path: '/{linkRoute}', name: 'principal_ver', methods: ['GET'])]
-    public function ver(
-        Principal $principal,
-        PrincipalRepository $principalRepository,
-        SectionRepository $sectionRepository
-    ): Response {
+    public function ver(Principal $principal, PrincipalRepository $principalRepository,
+                        SectionRepository $sectionRepository): Response
+    {
         $vista = $principal->getModelTemplate();
         if (!$vista) {
             $vista = ($principal->getPrincipal() ? $principal->getPrincipal()->getLinkRoute(

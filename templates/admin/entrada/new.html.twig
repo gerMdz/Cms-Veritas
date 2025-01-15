@@ -4,6 +4,7 @@
 {% block stylesheets %}
     {{ parent() }}
     {{ encore_entry_link_tags('select2') }}
+    {{ encore_entry_link_tags('ckeditor_config') }}
 {% endblock %}
 
 {% block contenpage %}
@@ -36,6 +37,20 @@
 {% block javascripts %}
     {{ parent() }}
     {{ encore_entry_script_tags('select2') }}
+    {{ encore_entry_script_tags('ckeditor_config') }}
+{#    <script src="{{ asset('build/ckeditor/ckeditor.js') }}"></script>#}
+{#<script type="application/javascript">#}
+
+
+{#    $(function () {#}
+{#        ClassicEditor#}
+{#            .create( document.querySelector( '#entrada_titulo' ) )#}
+{#            .catch( error => {#}
+{#                console.error( error );#}
+{#            } );#}
+{#    });#}
+
+{#</script>#}
 
     {#    <script type="application/javascript"> #}
     {#        $(function () { #}
