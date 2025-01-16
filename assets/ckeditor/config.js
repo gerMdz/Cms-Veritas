@@ -33,6 +33,7 @@ import {
     Bold,
     Code,
     CodeBlock,
+    Image,
     Essentials,
     FindAndReplace,
     FontBackgroundColor,
@@ -54,6 +55,7 @@ import {
     RemoveFormat,
     SelectAll,
     ShowBlocks,
+    SimpleUploadAdapter,
     SourceEditing,
     SpecialCharacters,
     SpecialCharactersArrows,
@@ -125,6 +127,7 @@ const editorConfig = {
             'blockQuote',
             'codeBlock',
             'htmlEmbed',
+            'image',
             '|',
             'alignment',
             '|',
@@ -145,6 +148,7 @@ const editorConfig = {
         Bold,
         Code,
         CodeBlock,
+        Image,
         Essentials,
         FindAndReplace,
         FontBackgroundColor,
@@ -166,6 +170,7 @@ const editorConfig = {
         RemoveFormat,
         SelectAll,
         ShowBlocks,
+        SimpleUploadAdapter,
         SourceEditing,
         SpecialCharacters,
         SpecialCharactersArrows,
@@ -336,7 +341,7 @@ const editorConfig = {
 
 };
 
-ClassicEditor.create(document.querySelector('#entrada_titulo'), editorConfig)
-ClassicEditor.create(document.querySelector('#entrada_contenido'), editorConfig)
+ClassicEditor.create(document.querySelector('.input_title'), editorConfig)
+ClassicEditor.create(document.querySelector('.input_content'), editorConfig)
 
 console.log('330');

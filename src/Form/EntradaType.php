@@ -106,7 +106,7 @@ class EntradaType extends AbstractType
                     'attr' => [
                         'required' => false,
                         'rows' => 20,
-                        'class' => 'ckeditor',
+                        'class' => 'input_title form-control',
                     ],
                 ]
             )
@@ -146,7 +146,7 @@ class EntradaType extends AbstractType
                     'attr' => [
                         'required' => false,
                         'rows' => 20,
-                        'class' => 'form-control',
+                        'class' => 'input_content form-control',
                     ],
                 ]
             )
