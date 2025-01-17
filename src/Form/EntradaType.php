@@ -10,6 +10,7 @@ use App\Entity\Section;
 use App\Entity\User;
 use App\Repository\ModelTemplateRepository;
 use App\Repository\PrincipalRepository;
+use Eckinox\TinymceBundle\Form\Type\TinymceType;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -105,8 +106,11 @@ class EntradaType extends AbstractType
                     'help' => 'Título de la entrada, se muestra en pantalla',
                     'attr' => [
                         'required' => false,
-                        'rows' => 20,
-                        'class' => 'input_title form-control',
+//                        'rows' => 20,
+//                        'class' => 'form-control',
+//                        "toolbar" => "undo redo | accordion accordionremove | blocks fontfamily fontsize | bold italic underline strikethrough | align numlist bullist | link image | table media | lineheight outdent indent| forecolor backcolor removeformat | charmap emoticons | code fullscreen preview | save print | pagebreak anchor codesample | ltr rtl",
+//                        "plugins" => 'preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons accordion',
+//                        "language" => 'es'
                     ],
                 ]
             )

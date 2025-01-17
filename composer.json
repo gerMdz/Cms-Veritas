@@ -15,6 +15,7 @@
         "doctrine/doctrine-bundle": "^2.5",
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^2.10",
+        "eckinox/tinymce-bundle": "^2.0",
         "endroid/qr-code-bundle": "4.3.*",
         "erusev/parsedown": "^1.6",
         "friendsofsymfony/ckeditor-bundle": "^2.4",
@@ -59,13 +60,13 @@
         "symfony/webpack-encore-bundle": "^1.13",
         "symfony/yaml": "6.4.*",
         "symfonycasts/reset-password-bundle": "^1.17",
+        "tinymce/tinymce": "^7.6",
         "twig/cssinliner-extra": "^3.7",
-        "twig/extensions": "^1.5",
         "twig/extra-bundle": "^3.1",
         "twig/intl-extra": "^3.1",
         "twig/markdown-extra": "^3.3",
         "twig/string-extra": "^3.0",
-        "twig/twig": "^2.12|^3.0"
+        "twig/twig": "^3.0"
     },
     "require-dev": {
         "dama/doctrine-test-bundle": "^6.7",
