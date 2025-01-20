@@ -1,7 +1,7 @@
 {% extends "admin/bars.html.twig" %}
 {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('ckeditor_config') }}
+    {{ encore_entry_link_tags('tinymce_config') }}
 {% endblock %}
 
 {% block title %}Edición Simple Entrada {{ entrada.id }} {% endblock %}
@@ -25,7 +25,7 @@
 {% block javascripts %}
     {{ parent() }}
     {{ encore_entry_script_tags('app') }}
-    {{ encore_entry_script_tags('ckeditor_config') }}
+    {{ encore_entry_script_tags('tinymce_config') }}
     <script src="{{ asset('js/admin_entrada_form.js') }}"></script>
 {% endblock %}
 {% block jslocal %}
