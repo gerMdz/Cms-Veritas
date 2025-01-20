@@ -1,0 +1,15 @@
+tinymce:
+  # The configurations mirror the TinyMCE attributes.
+  # Learn more about each option in Tiny's documentation:
+  # https://www.tiny.cloud/docs/tinymce/6/webcomponent-ref/
+  skin: "oxide-dark"
+  content_css: "dark"
+  plugins: "advlist autolink link image media table lists"
+  toolbar: "bold italic underline | bullist numlist"
+  images_upload_url: "https://yoursite.com/upload"
+  images_upload_route: "" # Name of the route for `images_upload_url` (leave `images_upload_url` blank if using this)
+  images_upload_route_params:  # Parameters of the route for `images_upload_url` (leave `images_upload_url` blank if using this)
+  images_upload_handler: ""
+  images_upload_base_path: ""
+  images_upload_credentials: "true"
+  images_reuse_filename: ""

@@ -10,6 +10,7 @@ use App\Entity\Section;
 use App\Entity\User;
 use App\Repository\ModelTemplateRepository;
 use App\Repository\PrincipalRepository;
+use Eckinox\TinymceBundle\Form\Type\TinymceType;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -18,6 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -89,23 +91,26 @@ class EntradaType extends AbstractType
                     ],
                 ]
             )
-            ->add('titulo', CKEditorType::class,
+            ->add('titulo', TextareaType::class,
                 [
                     'required' => true,
-                    'config' => [
-                        'uiColor' => '#ffffff',
+//                    'config' => [
+//                        'uiColor' => '#ffffff',
 //                    'toolbar' => 'full',
-                        'language' => 'es',
-                        'input_sync' => true,
-                    ],
+//                        'language' => 'es',
+//                        'input_sync' => true,
+//                    ],
                     'label_attr' => [
                         'class' => 'text-primary',
                     ],
                     'help' => 'Título de la entrada, se muestra en pantalla',
                     'attr' => [
-                        'required' => true,
-
-//                        'class' => 'form-control',
+                        'required' => false,
+//                        'rows' => 20,
+                        'class' => 'tinymce-editor',
+//                        "toolbar" => "undo redo | accordion accordionremove | blocks fontfamily fontsize | bold italic underline strikethrough | align numlist bullist | link image | table media | lineheight outdent indent| forecolor backcolor removeformat | charmap emoticons | code fullscreen preview | save print | pagebreak anchor codesample | ltr rtl",
+//                        "plugins" => 'preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons accordion',
+//                        "language" => 'es'
                     ],
                 ]
             )
@@ -130,22 +135,22 @@ class EntradaType extends AbstractType
             )
             ->add(
                 'contenido',
-                CKEditorType::class,
+                TextareaType::class,
                 [
                     'required' => false,
-                    'config' => [
-                        'uiColor' => '#ffffff',
+//                    'config' => [
+//                        'uiColor' => '#ffffff',
 //                    'toolbar' => 'full',
-                        'language' => 'es',
-                    ],
+//                        'language' => 'es',
+//                    ],
                     'label_attr' => [
                         'class' => 'text-primary',
                     ],
                     'help' => 'Contenido de la entrada, se muestra en pantalla',
                     'attr' => [
                         'required' => false,
-                        'rows' => 10,
-//                    'class' => 'form-control',
+                        'rows' => 20,
+                        'class' => 'tinymce-editor form-control',
                     ],
                 ]
             )
@@ -252,7 +257,7 @@ class EntradaType extends AbstractType
                 EntityType::class,
                 [
                     'class' => User::class,
-                    'choice_label' => fn (User $user) => sprintf('(%s) %s', $user->getPrimerNombre(), $user->getEmail()),
+                    'choice_label' => fn(User $user) => sprintf('(%s) %s', $user->getPrimerNombre(), $user->getEmail()),
                     'placeholder' => 'Seleccione Autor',
                     'invalid_message' => 'Por favor ingrese un autor',
                     'attr' => [
@@ -265,7 +270,7 @@ class EntradaType extends AbstractType
                 EntityType::class,
                 [
                     'class' => ModelTemplate::class,
-                    'query_builder' => fn (ModelTemplateRepository $er) => $er->findByTypeEntrada(),
+                    'query_builder' => fn(ModelTemplateRepository $er) => $er->findByTypeEntrada(),
                     'help' => 'Opcional, llama a un template específico, debe estar en sections creado',
                     'required' => false,
                     'attr' => [
@@ -362,7 +367,6 @@ class EntradaType extends AbstractType
                     'class' => ' text-secondary',
                 ],
             ])
-
             ->add('cssClass', TextType::class,
                 [
                     'help_attr' => [
@@ -409,8 +413,7 @@ class EntradaType extends AbstractType
                 'attr' => [
                     'class' => 'select2-enable',
                 ],
-            ])
-        ; // ; Final Builder
+            ]); // ; Final Builder
     }
 
     public function configureOptions(OptionsResolver $resolver): void

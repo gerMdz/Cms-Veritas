@@ -3,6 +3,8 @@
 namespace App\DataFixtures;
 
 use App\Entity\Comentario;
+use App\Entity\Entrada;
+use App\Entity\User;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
@@ -15,9 +17,9 @@ class ComentarioFixtures extends BaseFixture implements DependentFixtureInterfac
             $comment->setContenido(
                 $this->faker->boolean ? $this->faker->paragraph : $this->faker->sentences(2, true)
             );
-            $comment->setAutor($this->getRandomReference('main_users'))
+            $comment->setAutor($this->getRandomReference('main_users', User::class))
                 ->setCreatedAt($this->faker->dateTimeBetween('-1 months', '-1 seconds'))
-                ->setEntrada($this->getRandomReference('main_entradas'))
+                ->setEntrada($this->getRandomReference('main_entradas', Entrada::class))
                 ->setIsDeleted($this->faker->boolean(20));
 
             return $comment;
@@ -25,7 +27,7 @@ class ComentarioFixtures extends BaseFixture implements DependentFixtureInterfac
         $manager->flush();
     }
 
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
 //            TagFixture::class,

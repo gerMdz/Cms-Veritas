@@ -10,23 +10,33 @@ use App\Form\VoluntarioReservaRegistrationFormType;
 use App\Repository\UserRepository;
 use App\Security\LoginFormAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
+use LogicException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
+use Symfony\Component\Routing\Attribute\Route;
+
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 
 class SecurityController extends AbstractController
 {
-    #[Route(path: '/admin/ingreso', name: 'app_login')]
-    public function login(AuthenticationUtils $authenticationUtils): Response
+
+    public function __construct(
+        readonly CsrfTokenManagerInterface $csrfTokenManager)
     {
+    }
+
+    #[Route(path: '/admin/ingreso', name: 'app_login')]
+    public function login(AuthenticationUtils $authenticationUtils, Request $request): Response
+    {
+
         try {
-            $em = $this->container->get('doctrine');
+            $this->container->get('doctrine');
         } catch (NotFoundExceptionInterface|ContainerExceptionInterface) {
         }
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -41,16 +51,24 @@ class SecurityController extends AbstractController
     #[Route(path: '/admin/logout', name: 'app_logout')]
     public function logout(): never
     {
-        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+        throw new LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 
     /**
+     * @param Request $request
+     * @param UserPasswordHasherInterface $userPasswordHasher
+     * @param UserAuthenticatorInterface $userAuthenticator
+     * @param LoginFormAuthenticator $formAuthenticator
+     * @param EntityManagerInterface $entityManager
      * @return Response
      */
     #[Route(path: '/admin/registro', name: 'app_registro')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher,
-        GuardAuthenticatorHandler $authenticatorHandler, LoginFormAuthenticator $formAuthenticator,
-        EntityManagerInterface $entityManager)
+    public function register(
+        Request $request,
+        UserPasswordHasherInterface $userPasswordHasher,
+        UserAuthenticatorInterface $userAuthenticator,
+        LoginFormAuthenticator $formAuthenticator,
+        EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(UserRegistrationFormType::class);
         $form->handleRequest($request);
@@ -76,27 +94,30 @@ class SecurityController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return $authenticatorHandler->authenticateUserAndHandleSuccess(
+            return $userAuthenticator->authenticateUser(
                 $user,
-                $request,
                 $formAuthenticator,
-                'main'
+                $request
             );
         }
 
         return $this->render('security/register.html.twig', [
-            'regristroForm' => $form,
+            'registroForm' => $form,
         ]);
     }
 
     /**
+     * @param Request $request
+     * @param UserPasswordHasherInterface $userPasswordHasher
+     * @param UserRepository $userRepository
+     * @param EntityManagerInterface $entityManager
      * @return Response
      */
     #[Route(path: '/admin/registro_voluntario_reserva', name: 'app_registro_voluntario_reserva')]
     public function registerVoluntarioReserva(Request $request,
         UserPasswordHasherInterface $userPasswordHasher,
         UserRepository $userRepository,
-        EntityManagerInterface $entityManager)
+        EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(VoluntarioReservaRegistrationFormType::class);
         $form->handleRequest($request);
@@ -132,7 +153,19 @@ class SecurityController extends AbstractController
         }
 
         return $this->render('security/registerVoluntarioReserva.html.twig', [
-            'regristroForm' => $form,
+            'registroForm' => $form,
         ]);
+    }
+
+    #[Route(path: '/test/route/index', name: 'app_test_route')]
+    public function testRoute(Request $request)
+    {
+        // Establecer una variable de sesión
+        $request->getSession()->set('test', 'Hello, session!');
+
+        // Obtener la variable de sesión
+        $sessionValue = $request->getSession()->get('test');
+
+        return new Response($sessionValue); // Deberías ver 'Hello, session!' en esta ruta
     }
 }

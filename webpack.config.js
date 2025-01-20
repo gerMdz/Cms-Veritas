@@ -2,9 +2,53 @@ const Encore = require('@symfony/webpack-encore');
 const PurgeCssPlugin = require('purgecss-webpack-plugin');
 const glob = require('glob-all');
 const path = require('path');
+const fs = require( 'fs' );
+// const { loaders } = require( '@ckeditor/ckeditor5-dev-utils' );
+// const { CKEditorTranslationsPlugin } = require( '@ckeditor/ckeditor5-dev-translations' );
 
-// Manually configure the runtime environment if not already configured yet by the "encore" command.
-// It's useful when you use tools that rely on webpack.config.js file.
+// function getCKEditorConfig(webroot) {
+//     return {
+//         devtool: 'source-map',
+//         performance: { hints: false },
+//         cache: {
+//             type: 'filesystem',
+//             cacheDirectory: path.resolve(__dirname, 'var/cache/js/webpack'),
+//         },
+//         entry: path.resolve( __dirname, webroot + 'app/assets/libraries/ckeditor/src', 'ckeditor.ts' ),
+//         output: {
+//             library: 'ClassicEditor',
+//             path: path.resolve( __dirname, webroot + 'media/libraries/ckeditor' ),
+//             filename: 'ckeditor.js',
+//             libraryTarget: 'umd',
+//             libraryExport: 'default'
+//         },
+//         plugins: [
+//             new CKEditorTranslationsPlugin( {
+//                 language: 'en',
+//                 additionalLanguages: 'all'
+//             } )
+//         ],
+//         module: {
+//             rules: [
+//                 loaders.getIconsLoader( { matchExtensionOnly: true } ),
+//                 loaders.getStylesLoader( {
+//                     themePath: require.resolve( '@ckeditor/ckeditor5-theme-lark' ),
+//                     minify: true
+//                 } ),
+//                 loaders.getTypeScriptLoader()
+//             ]
+//         },
+//         resolve: {
+//             extensions: [ '.ts', '.js', '.json' ]
+//         },
+//         optimization: {
+//             removeAvailableModules: false,
+//             removeEmptyChunks: false,
+//             splitChunks: false,
+//         },
+//     };
+// }
+
 if (!Encore.isRuntimeEnvironmentConfigured()) {
     Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev');
 }
@@ -30,6 +74,7 @@ Encore
     .addEntry('select2', './assets/js/select2.js')
     .addEntry('select2-parent', './assets/js/select2-parent.js')
     .addEntry('select2-entrada', './assets/js/select2-entrada.js')
+    .addEntry('tinymce_config', './assets/tinymce/main.js')
     .addEntry('nota_mensaje', './assets/js/nota_mensaje.js')
     .addStyleEntry('loginStyle', './assets/css/styles.css')
     .addStyleEntry('perfilStyle', './assets/css/account.css')
@@ -111,14 +156,14 @@ Encore
         pattern: /\.(png|jpg|jpeg)$/,
 
     })
-    .copyFiles([
-        {from: './node_modules/ckeditor4/', to: 'ckeditor/[path][name].[ext]', pattern: /\.(js|css)$/, includeSubdirectories: false},
-        {from: './node_modules/ckeditor4/adapters', to: 'ckeditor/adapters/[path][name].[ext]'},
-        {from: './node_modules/ckeditor4/lang', to: 'ckeditor/lang/[path][name].[ext]'},
-        {from: './node_modules/ckeditor4/plugins', to: 'ckeditor/plugins/[path][name].[ext]'},
-        {from: './node_modules/ckeditor4/skins', to: 'ckeditor/skins/[path][name].[ext]'},
-        {from: './assets/ckeditor/plugins', to: 'ckeditor/plugins/[path][name].[ext]'},
-    ])
+    // .copyFiles([
+    //     {from: './node_modules/@ckeditor/ckeditor5-build-classic/build/', to: 'ckeditor/[path][name].[ext]', pattern: /\.(js|css)$/, includeSubdirectories: false},
+    //     {from: './node_modules/@ckeditor/ckeditor5-adapter-ckfinder/build/adapter-ckfinder.js ', to: 'ckeditor/adapters/[path][name].[ext]'},
+    //     // {from: './node_modules/ckeditor4/lang', to: 'ckeditor/lang/[path][name].[ext]'},
+    //     // {from: './node_modules/ckeditor4/plugins', to: 'ckeditor/plugins/[path][name].[ext]'},
+    //     // {from: './node_modules/ckeditor4/skins', to: 'ckeditor/skins/[path][name].[ext]'},
+    //     // {from: './assets/ckeditor/plugins', to: 'ckeditor/plugins/[path][name].[ext]'},
+    // ])
 
 
 ;
@@ -132,5 +177,13 @@ Encore
 //         }
 //     }));
 // }
+
+let webroot = '';
+if (!fs.existsSync('app/release_metadata.json')) {
+    let files = glob.sync("**/app/release_metadata.json");
+    if (files.length > 0) {
+        webroot = path.dirname(path.dirname(files[0])) + '/';
+    }
+}
 
 module.exports = Encore.getWebpackConfig();
