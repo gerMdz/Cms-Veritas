@@ -27,6 +27,10 @@
     {{ encore_entry_script_tags('app') }}
     {{ encore_entry_script_tags('tinymce_config') }}
     <script src="{{ asset('js/admin_entrada_form.js') }}"></script>
+    <script src="{{ asset('bundles/tinymce/ext/tinymce/tinymce.min.js') }}"></script>
+    <script src="{{ asset('bundles/tinymce/ext/tinymce-webcomponent.js') }}"></script>
+    <script src="{{ asset('bundles/tinymce/ext/tinymce/plugins/help/js/i18n/keynav/es.js') }}"></script>
+    <script src="{{ asset('bundles/tinymce/ext/tinymce/skins/content/default/content.js') }}"></script>
 {% endblock %}
 {% block jslocal %}
     {{ encore_entry_script_tags('summernote') }}

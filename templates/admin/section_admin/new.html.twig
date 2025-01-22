@@ -3,7 +3,7 @@
 {% block stylesheets %}
     {{ parent() }}
     {{ encore_entry_link_tags('select2') }}
-    {#    <link rel="stylesheet" href="{{ asset('vendors/datetimepicker/css/bootstrap-datetimepicker.min.css') }}"> #}
+    {{ encore_entry_link_tags('tinymce_config') }}
     <style>
         .custom-file-input ~ .custom-file-label.custom-file-label::after {
             content: "Elegir imagen";
@@ -60,6 +60,11 @@
         <script src="{{ asset('material-dashboard/assets/js/plugins/moment-with-locales.min.js') }}"></script>
         <script src="{{ asset('material-dashboard/assets/js/plugins/bootstrap-datetimepicker.min.js') }}"></script>
         {{ encore_entry_script_tags('select2') }}
+        {{ encore_entry_script_tags('tinymce_config') }}
+        <script src="{{ asset('bundles/tinymce/ext/tinymce/tinymce.min.js') }}"></script>
+        <script src="{{ asset('bundles/tinymce/ext/tinymce-webcomponent.js') }}"></script>
+        {#    <script src="{{ asset('bundles/tinymce/ext/tinymce/plugins/help/js/i18n/keynav/es.js') }}"></script>#}
+        <script src="{{ asset('bundles/tinymce/ext/tinymce/skins/content/default/content.js') }}"></script>
 
 
         <script type="application/javascript">

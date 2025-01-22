@@ -5,7 +5,6 @@ namespace App\Form;
 use App\Entity\ModelTemplate;
 use App\Entity\Section;
 use App\Repository\ModelTemplateRepository;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -20,7 +19,7 @@ use Symfony\Component\Validator\Constraints\Image;
 
 class SectionFormType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('name', null, [
@@ -53,7 +52,7 @@ class SectionFormType extends AbstractType
                 'required' => false,
 //                'format' => 'yyyy-MM-dd HH:mm',
 //                'attr' => ['class' => 'datetimepicker']
-                 'attr' => ['class' => 'form-control '],
+                'attr' => ['class' => 'form-control '],
                 'input' => 'datetime',
             ])
             ->add('columns', IntegerType::class, [
@@ -76,19 +75,17 @@ class SectionFormType extends AbstractType
             ])
             ->add('modelTemplate', EntityType::class, [
                 'class' => ModelTemplate::class,
-                'query_builder' => fn (ModelTemplateRepository $er) => $er->findByTypeSection(),
+                'query_builder' => fn(ModelTemplateRepository $er) => $er->findByTypeSection(),
                 'help' => 'Opcional, llama a un template específico, debe estar en sections creado',
                 'required' => false,
                 'attr' => [
                     'class' => 'select2-enable',
                 ],
             ])
-            ->add('contenido', CKEditorType::class, [
+            ->add('contenido', TextareaType::class, [
                 'required' => false,
-                'config' => [
-                    'uiColor' => '#fafafa'],
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'tinymce-editor form-control',
                 ],
             ])
             ->add('imageFile', FileType::class, [
@@ -105,20 +102,16 @@ class SectionFormType extends AbstractType
                     'placeholder' => 'Ingrese una imagen para esta sección',
                 ],
             ])
-            ->add('title', CKEditorType::class, [
+            ->add('title', TextareaType::class, [
                 'required' => false,
-                'config' => [
-                    'uiColor' => '#fafafa'],
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'tinymce-editor',
                 ],
             ])
-            ->add('footer', CKEditorType::class, [
+            ->add('footer', TextareaType::class, [
                 'required' => false,
-                'config' => [
-                    'uiColor' => '#fafafa'],
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'tinymce-editor form-control',
                 ],
             ])
             ->add('isLinkExterno', CheckboxType::class, [
@@ -143,7 +136,7 @@ class SectionFormType extends AbstractType
             ]); // ; Final del builder
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Section::class,

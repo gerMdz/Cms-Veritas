@@ -26,6 +26,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 
 class AdminEntradaController extends BaseController
@@ -38,7 +39,7 @@ class AdminEntradaController extends BaseController
     }
 
     #[Route(path: '/admin/entrada', name: 'admin_entrada_index')]
-    #[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_ESCRITOR')]
+    #[IsGranted('ROLE_ESCRITOR')]
     public function index(
         EntradaRepository $entradaRepository,
         PaginatorInterface $paginator,
@@ -67,7 +68,7 @@ class AdminEntradaController extends BaseController
      * @throws QueryException
      */
     #[Route(path: '/admin/entrada/publicadas', name: 'admin_entrada_publicadas')]
-    #[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_ESCRITOR')]
+    #[IsGranted('ROLE_ESCRITOR')]
     public function listadoPublicado(
         EntradaRepository $entradaRepository,
         PaginatorInterface $paginator,
@@ -92,7 +93,7 @@ class AdminEntradaController extends BaseController
      * @throws \Exception
      */
     #[Route(path: '/admin/entrada/{id}/edit', name: 'admin_entrada_edit')]
-    #[\Symfony\Component\Security\Http\Attribute\IsGranted('MANAGE', subject: 'entrada')]
+    #[IsGranted('MANAGE', subject: 'entrada')]
     public function edit(
         Request $request,
         Entrada $entrada,
@@ -140,7 +141,7 @@ class AdminEntradaController extends BaseController
      * @throws \Exception
      */
     #[Route(path: '/admin/entrada/{id}/edit-complex', name: 'admin_entrada_edit_complex')]
-    #[\Symfony\Component\Security\Http\Attribute\IsGranted('MANAGE', subject: 'entrada')]
+    #[IsGranted('MANAGE', subject: 'entrada')]
     public function editComplex(Request $request, Entrada $entrada): Response
     {
         $form = $this->createForm(EntradaComplexType::class, $entrada);
@@ -165,7 +166,7 @@ class AdminEntradaController extends BaseController
      * @throws \Exception
      */
     #[Route(path: '/admin/entrada/new', name: 'admin_entrada_new')]
-    #[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_ESCRITOR')]
+    #[IsGranted('ROLE_ESCRITOR')]
     public function new(EntityManagerInterface $em, Request $request, UploaderHelper $uploaderHelper)
     {
         $entrada = new Entrada();
@@ -226,7 +227,7 @@ class AdminEntradaController extends BaseController
      * @throws \Exception
      */
     #[Route(path: '/admin/new/step1', name: 'admin_entrada_new_step1', methods: ['GET', 'POST'])]
-    #[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_ESCRITOR')]
+    #[IsGranted('ROLE_ESCRITOR')]
     public function newStepOne(Request $request, ModelTemplateRepository $modelTemplateRepository): Response
     {
         $entrada = new Entrada();
@@ -236,7 +237,7 @@ class AdminEntradaController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $section = $form['section']->getData();
             $entrada->addSection($section);
-            if ($session_template = $this->container->get('session')->get('model_template_id')) {
+            if ($session_template = $this->container->get('request_stack')->getSession()->get('model_template_id')) {
                 if ($modelTemplate = $modelTemplateRepository->find($session_template)) {
                     $entrada->setModelTemplate($modelTemplate);
                 }
@@ -256,7 +257,7 @@ class AdminEntradaController extends BaseController
     }
 
     #[Route(path: '/admin/new/step2/{id}', name: 'admin_entrada_new_step2', methods: ['GET', 'POST'])]
-    #[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_ADMIN')]
+    #[IsGranted('ROLE_ADMIN')]
     public function newStepTwo(Request $request, Entrada $entrada, PrincipalRepository $principalRepository): Response
     {
         $form = $this->createForm(StepTwoType::class, $entrada);
@@ -283,15 +284,13 @@ class AdminEntradaController extends BaseController
      * @throws \Exception
      */
     #[Route(path: '/admin/new/step3/{id}', name: 'admin_entrada_new_step3', methods: ['GET', 'POST'])]
-    #[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_ESCRITOR')]
+    #[IsGranted('ROLE_ESCRITOR')]
     public function newStepThree(Request $request, Entrada $entrada, PrincipalRepository $principalRepository): Response
     {
         $form = $this->createForm(StepThreeType::class, $entrada);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $section = $form['section']->getData();
-            $entrada->addSection($section);
             $this->managerRegistry->getManager()->persist($entrada);
             $this->managerRegistry->getManager()->flush();
 

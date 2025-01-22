@@ -9,40 +9,30 @@ use App\Repository\UserRepository;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class StepOneType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add(
                 'titulo',
-                CKEditorType::class, [
+                TextareaType::class, [
                 'required' => true,
-                'config' => [
-                    'uiColor' => '#ffffff',
-//                    'toolbar' => 'full',
-                    'language' => 'es',
-                    'input_sync' => true,
-                ],
                 'attr' => [
                     'required' => false,
-                    'class' => 'form-control',
+                    'class' => 'tinymce-editor',
                 ],
             ])
-            ->add('contenido', CKEditorType::class, [
+            ->add('contenido', TextareaType::class, [
                 'required' => false,
-                'config' => [
-                    'uiColor' => '#ffffff',
-//                    'toolbar' => 'full',
-                    'language' => 'es',
-                ],
                 'attr' => [
                     'required' => false,
                     'rows' => 10,
-//                    'class' => 'form-control',
+                    'class' => 'tinymce-editor',
                 ],
             ])
             ->add(
@@ -80,7 +70,7 @@ class StepOneType extends AbstractType
         ; // Fin del builder
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(
             [

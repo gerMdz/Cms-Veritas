@@ -37,47 +37,10 @@
 {% block javascripts %}
     {{ parent() }}
     {{ encore_entry_script_tags('select2') }}
+    {{ encore_entry_script_tags('tinymce_config') }}
     <script src="{{ asset('bundles/tinymce/ext/tinymce/tinymce.min.js') }}"></script>
     <script src="{{ asset('bundles/tinymce/ext/tinymce-webcomponent.js') }}"></script>
-    {#    <script src="{{ asset('bundles/tinymce/ext/tinymce/plugins/help/js/i18n/keynav/es.js') }}"></script>#}
+        <script src="{{ asset('bundles/tinymce/ext/tinymce/plugins/help/js/i18n/keynav/es.js') }}"></script>
     <script src="{{ asset('bundles/tinymce/ext/tinymce/skins/content/default/content.js') }}"></script>
-    {{ encore_entry_script_tags('tinymce_config') }}
-{#    <script src="{{ asset('build/ckeditor/ckeditor.js') }}"></script>#}
-{#<script type="application/javascript">#}
 
-
-{#    $(function () {#}
-{#        ClassicEditor#}
-{#            .create( document.querySelector( '#entrada_titulo' ) )#}
-{#            .catch( error => {#}
-{#                console.error( error );#}
-{#            } );#}
-{#    });#}
-
-{#</script>#}
-
-    {#    <script type="application/javascript"> #}
-    {#        $(function () { #}
-    {#            $('.datetimepicker').datetimepicker({ #}
-    {#                format: 'YYYY-MM-DD HH:mm ', #}
-    {#                locale: 'es', #}
-    {#                inline: false, #}
-    {#                // sideBySide: true, #}
-    {#                icons: { #}
-    {#                    time: "fas fa-clock text-primary", #}
-    {#                    date: "fa fa-calendar text-primary", #}
-    {#                    up: "fa fa-chevron-up", #}
-    {#                    down: "fa fa-chevron-down", #}
-    {#                    previous: 'fa fa-chevron-left', #}
-    {#                    next: 'fa fa-chevron-right', #}
-    {#                    today: 'fa fa-screenshot', #}
-    {#                    clear: 'fa fa-trash', #}
-    {#                    close: 'fa fa-remove' #}
-    {#                }, #}
-    {#                tooltips: { #}
-    {#                    selectTime: "Seleccione Hora" #}
-    {#                }, #}
-    {#            }); #}
-    {#        }) #}
-    {#    </script> #}
 {% endblock %}

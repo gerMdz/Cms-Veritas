@@ -1,6 +1,7 @@
 {% extends "admin/bars.html.twig" %}
 {% block title %}Edición Entrada {{ entrada.id }} {% endblock %}
-
+{% block search %}
+{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
 {#    {{ encore_entry_link_tags('select2-parent') }}#}
@@ -77,24 +78,15 @@
     <script src="{{ asset('bundles/tinymce/ext/tinymce-webcomponent.js') }}"></script>
 {#    <script src="{{ asset('bundles/tinymce/ext/tinymce/plugins/help/js/i18n/keynav/es.js') }}"></script>#}
     <script src="{{ asset('bundles/tinymce/ext/tinymce/skins/content/default/content.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.1/min/dropzone.min.js"
+            integrity="sha256-v7sFPKIh3GHvV9MMFBXcSBLG/BDUC7h1fpfDC5tp1FM=" crossorigin="anonymous"></script>
+    <script src="{{ asset('js/admin_entrada_form.js') }}"></script>
+    {{ encore_entry_script_tags('app') }}
+    {{ encore_entry_script_tags('tinymce_config') }}
 
 
 
     <script>
-        // tinymce.init({
-        //     selector: 'textarea#entrada_title',
-        //     language: "es",
-        //     height: 300,
-        //     plugins: [
-        //         'advlist autolink lists link image charmap print preview hr anchor pagebreak',
-        //         'searchreplace wordcount visualblocks visualchars code fullscreen',
-        //         'insertdatetime media nonbreaking save table contextmenu directionality',
-        //         'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc'
-        //     ],
-        // })
-
-
-
         $('.custom-file-input').on('change', function (event) {
             const inputFile = event.currentTarget;
             $(inputFile).parent()
@@ -104,15 +96,8 @@
 
     </script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.1/min/dropzone.min.js"
-            integrity="sha256-v7sFPKIh3GHvV9MMFBXcSBLG/BDUC7h1fpfDC5tp1FM=" crossorigin="anonymous"></script>
-    <script src="{{ asset('js/admin_entrada_form.js') }}"></script>
-    {{ encore_entry_script_tags('app') }}
-    {{ encore_entry_script_tags('tinymce_config') }}
+
 
 {% endblock %}
 {% block jslocal %}
-{#    {{ encore_entry_script_tags('summernote') }}#}
-{#    {{ encore_entry_script_tags('select2-parent') }}#}
-{#    {{ encore_entry_script_tags('select2') }}#}
 {% endblock %}

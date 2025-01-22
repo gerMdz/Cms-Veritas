@@ -1,31 +1,5 @@
 {% extends "admin/bars.html.twig" %}
 {% block title %}Admin Listado Entradas{% endblock %}
-{# {% block nav %} #}
-{#    {{ include('admin/_nav.html.twig',  {'marca_label': 'entrada'}) }} #}
-{# {% endblock %} #}
-
-{# {% block breadcrumb %} #}
-{# {{parent()}} #}
-{# <li class="breadcrumb-item active"><span>Entradas</span></li> #}
-{# <li class="breadcrumb-item float-end"> #}
-{# <div class="form-group form-inline"> #}
-{# <form action="" method="get"> #}
-{#        <span class="input-group-prepend"> #}
-{#            <button class="btn btn-outline-secondary bg-white border-bottom-0 border rounded-pill" type="submit" #}
-{#            id="btn-search" #}
-{#            data-id="search-input" > #}
-{#                    <i class="fa fa-search"></i> #}
-{#                    </button> #}
-
-{#         <label for="busq"></label><input class="form-control border-end-0 border rounded-pill"  type="search" #}
-{#            value="" id="busq" name="busq" placeholder="Buscar ..."> #}
-{#            </span> #}
-
-{#        </form> #}
-{#        </div> #}
-{# </li> #}
-
-{# {%endblock%} #}
 
 {% block contenpage %}
     <div class="">
@@ -34,19 +8,21 @@
         </div>
 
         <h2>{{ "backend.post.listing"|trans }}</h2>
-        <ul class="nav navbar-right panel_toolbox">
-            <li>
+        <ul class="list-inline">
+
+            <li class="list-inline-item">
                 <a href="{{ path('admin_entrada_new') }}" class="btn btn-sm btn-primary btn-round">
                     Crear Entrada <span class="fa fa-plus-circle"></span>
                 </a>
             </li>
-            <li>
+            <li class="list-inline-item">
                 <a class="btn btn-sm btn-info btn-round"
                    href="{{ path('admin_entrada_new_step1') }}">
-                    <i class="fas fa-hand-sparkles"></i> Asistente Crear Entrada
+                    Asistente Crear Entrada
+                    <i class="fas fa-hand-sparkles"></i>
                 </a>
             </li>
-            <li>
+            <li class="list-inline-item">
                 <a href="{{ path('admin_entrada_publicadas') }}"
                    class="btn btn-sm btn-info btn-round">
                     Ver Publicados <span class="fa fa-eye"></span>
@@ -164,12 +140,6 @@
 
         <div class="row"></div>
         <div class="text-center align-items-center">
-{#            <a href="{{ path('admin_entrada_new') }}" class="btn btn-sm btn-primary btn-round">#}
-{#                Crear Entrada <span class="fa fa-plus-circle"></span>#}
-{#            </a>#}
-{#            <a href="{{ path('admin_entrada_publicadas') }}" class="btn btn-sm btn-info btn-round">#}
-{#                Ver Publicados <span class="fa fa-eye"></span>#}
-{#            </a>#}
 
             {{ knp_pagination_render(entradas) }}
         </div>
@@ -182,7 +152,8 @@
             <li class="list-inline-item">
                 <a class="btn btn-sm btn-info btn-round"
                    href="{{ path('admin_entrada_new_step1') }}">
-                    <i class="fas fa-hand-sparkles"></i> Asistente Crear Entrada
+                    Asistente Crear Entrada
+                    <i class="fas fa-hand-sparkles"></i>
                 </a>
             </li>
             <li class="list-inline-item">
@@ -192,11 +163,11 @@
                 </a>
             </li>
         </ul>
-        <hr />
-        <br />
-        <br />
-        <br />
-        <br />
+        <hr/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
 
 
     </div>
@@ -208,10 +179,7 @@
     {{ parent() }}
     <script>
         $('#entrada').addClass('active');
-        // $('#btn-search').click(function(e) {
-        //     e.preventDefault();
-        //     console.log('s');
-        // })
+
         $("#btn-search").on("click", function () {
             alert($(this).text());
         });
