@@ -7,6 +7,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -19,21 +20,19 @@ class StepThreeType extends AbstractType
     {
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('cssClass', null, [
                 'label' => 'Clase css',
                 'help' => 'Las plantillas pueden aceptar class adicional, tenga en cuenta que debe ser una clase ya definida ',
             ])
-            ->add('contenido', CKEditorType::class, [
+            ->add('contenido', TextareaType::class, [
                 'label' => 'Contenido',
                 'help' => 'Opcional. El contenido de la sección se verá reflejado según la plantilla que elija',
                 'required' => false,
-                'config' => [
-                    'uiColor' => '#fafafa'],
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'tinymce-editor',
                 ],
             ])
             ->add('disponible', CheckboxType::class, [

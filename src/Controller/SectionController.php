@@ -47,7 +47,7 @@ class SectionController extends BaseController
     /**
      * SectionController constructor.
      */
-    public function __construct(private readonly RequestStack $requestStack, private readonly HandlerSourceApi $api,
+    public function __construct(private readonly RequestStack    $requestStack, private readonly HandlerSourceApi $api,
                                 private readonly ManagerRegistry $managerRegistry)
     {
     }
@@ -156,10 +156,11 @@ class SectionController extends BaseController
 
     #[Route(path: '/entrada/{id}/{entrada}', name: 'admin_entrada_delete_section', methods: ['DELETE'])]
     public function deleteEntradaSection(
-        Section $section,
-        Entrada $entrada,
+        Section                $section,
+        Entrada                $entrada,
         EntityManagerInterface $entityManager
-    ): Response {
+    ): Response
+    {
         $section->removeEntrada($entrada);
 
         $entityManager->flush();
@@ -169,10 +170,11 @@ class SectionController extends BaseController
 
     #[Route(path: '/principal/{id}/{principal}', name: 'admin_principal_delete_section', methods: ['DELETE'])]
     public function deletePrincipalSection(
-        Section $section,
-        Principal $principal,
+        Section                $section,
+        Principal              $principal,
         EntityManagerInterface $entityManager
-    ): Response {
+    ): Response
+    {
         if (null !== $principal->getSecciones()) {
             $section->removePrincipale($principal);
         }
@@ -191,7 +193,7 @@ class SectionController extends BaseController
     {
         $entradas = $entradaRepository->findAllEntradasBySeccion($section->getId());
 
-        $twig = $section->getModelTemplate().'.html.twig';
+        $twig = $section->getModelTemplate() . '.html.twig';
 
         $response_api = null;
         $apiSource = null;
@@ -199,7 +201,7 @@ class SectionController extends BaseController
         if ('api.html.twig' === $twig) {
             try {
                 $apiSource = $sourceApiRepository->findBy([
-                 'identifier' => $section->getIdentificador(),
+                    'identifier' => $section->getIdentificador(),
                 ]);
             } catch (NotFoundExceptionInterface|ContainerExceptionInterface) {
             }
@@ -211,7 +213,7 @@ class SectionController extends BaseController
                 }
             }
         }
-        $model = 'models/sections/'.$twig;
+        $model = 'models/sections/' . $twig;
 
         return $this->render($model, [
             'entradas' => $entradas,
@@ -259,11 +261,9 @@ class SectionController extends BaseController
 
     #[Route(path: '/new/step2/{id}', name: 'admin_section_new_step2', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_ESCRITOR')]
-    public function newStepTwo(
-        Request $request,
-        Section $section,
-        ModelTemplateRepository $modelTemplateRepository
-    ): Response {
+    public function newStepTwo(Request                 $request, Section $section,
+                               ModelTemplateRepository $modelTemplateRepository): Response
+    {
         $section->setTitle($section->getName());
         $form = $this->createForm(StepTwoType::class, $section);
         $form->handleRequest($request);
