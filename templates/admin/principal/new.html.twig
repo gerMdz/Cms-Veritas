@@ -1,0 +1,68 @@
+{% extends "admin/bars.html.twig" %}
+
+{% block title %}Crear Página Principal{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+{#    {{ encore_entry_link_tags('select2-parent') }}#}
+    {{ encore_entry_link_tags('select2') }}
+    {{ encore_entry_link_tags('tinymce_config') }}
+    <style>
+        .custom-file-input ~ .custom-file-label.custom-file-label::after {
+            content: "Elegir imagen";
+            color: #fff;
+            background-color: #9c27b0;
+            top: 10px;
+            box-shadow: 0 2px 2px 0 rgba(156, 39, 176, 0.14), 0 3px 1px -2px rgba(156, 39, 176, 0.2), 0 1px 5px 0 rgba(156, 39, 176, 0.12);
+            position: absolute;
+            /*padding: 3px 9px;*/
+            /*margin: auto 1px;*/
+            font-size: .75rem;
+            font-weight: 400;
+            /*line-height: 1.428571;*/
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0;
+            cursor: pointer;
+            border: 0 currentcolor;
+            border-radius: 0.2rem;
+            outline: 0;
+            transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: box-shadow, transform;
+        }
+    </style>
+
+{% endblock %}
+
+{% block contenpage %}
+<div class="">
+    <div class="page-title">
+        <div class="title_left">
+            <h4>{{ "backend.principal.new"|trans }}</h4>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+
+            <div class="x_panel">
+                {{ include('admin/principal/_form.html.twig') }}
+{#                <a href="{{ path('principal_index') }}" class="pull-right text-dark col-sm-6 btn btn-success">Volver al listado</a>#}
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+    {% block javascripts %}
+        {{ parent() }}
+        {{ encore_entry_script_tags('select2') }}
+        {{ encore_entry_script_tags('tinymce_config') }}
+        <script src="{{ asset('bundles/tinymce/ext/tinymce/tinymce.min.js') }}"></script>
+        <script src="{{ asset('bundles/tinymce/ext/tinymce-webcomponent.js') }}"></script>
+        <script src="{{ asset('bundles/tinymce/ext/tinymce/plugins/help/js/i18n/keynav/es.js') }}"></script>
+        <script src="{{ asset('bundles/tinymce/ext/tinymce/skins/content/default/content.js') }}"></script>
+
+    {% endblock %}
+{% block jslocal %}
+    {{ encore_entry_script_tags('select2-parent') }}
+
+{% endblock %}

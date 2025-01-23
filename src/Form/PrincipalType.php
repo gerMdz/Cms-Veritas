@@ -11,6 +11,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,25 +19,21 @@ use Symfony\Component\Validator\Constraints\Image;
 
 class PrincipalType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('titulo', CKEditorType::class, [
+            ->add('titulo', TextareaType::class, [
                 'required' => false,
-                'config' => [
-                    'uiColor' => '#ffffff'],
                 'attr' => [
                     'required' => false,
-                    'class' => 'form-control',
+                    'class' => 'tinymce-editor',
                 ],
             ])
-            ->add('contenido', CKEditorType::class, [
+            ->add('contenido', TextareaType::class, [
                 'required' => true,
-                'config' => [
-                    'uiColor' => '#ffffff'],
                 'attr' => [
                     'required' => false,
-                    'class' => 'form-control',
+                    'class' => 'tinymce-editor',
                 ],
             ])
             ->add('linkRoute', TextType::class, [
@@ -114,7 +111,7 @@ class PrincipalType extends AbstractType
             ])
             ->add('isActive', CheckboxType::class, [
                 'required' => false,
-                'label' => 'Activa?',
+                'label' => false,
                 'label_attr' => ['class' => 'checkbox-custom text-dark'],
                 'attr' => [
                     'class' => 'form-check-input ',
@@ -124,7 +121,7 @@ class PrincipalType extends AbstractType
         ; // final del builder
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Principal::class,

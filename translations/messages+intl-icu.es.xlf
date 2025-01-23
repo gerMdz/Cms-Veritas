@@ -369,6 +369,18 @@
         <source>admin.section.new</source>
         <target>Crear nueva sección</target>
       </trans-unit>
+      <trans-unit id="d7lYMQ5" resname="backend.menu.principal">
+        <source>backend.menu.principal</source>
+        <target>Páginas</target>
+      </trans-unit>
+      <trans-unit id="d7lYMQ6" resname="backend.principal.listing">
+        <source>backend.principal.listing</source>
+        <target>Listado de páginas</target>
+      </trans-unit>
+      <trans-unit id="d7lYMQ7" resname="backend.principal.new">
+        <source>backend.principal.new</source>
+        <target>Crear nueva página</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
