@@ -1,5 +1,7 @@
 import tinymce from 'tinymce';
+
 import 'tinymce/themes/silver';
+import 'tinymce/skins/content/default/content';
 import 'tinymce/icons/default';
 import 'tinymce/plugins/preview';
 import 'tinymce/plugins/quickbars';
@@ -16,11 +18,11 @@ import 'tinymce/plugins/media';
 import 'tinymce/plugins/codesample';
 import 'tinymce/plugins/anchor';
 import 'tinymce/plugins/autolink';
+import es from 'tinymce/plugins/help/js/i18n/keynav/es.js';
 require('./content.min.css');
 
 tinymce.init({
     selector: '.tinymce-editor',
-    language: 'es',
     plugins: 'preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons accordion',
     editimage_cors_hosts: ['picsum.photos'],
     menubar: 'file edit view insert format tools table help',
@@ -61,6 +63,7 @@ tinymce.init({
     //     }
     // },
     height: 300,
+    language: es,
     // image_caption: true,
     // quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
     // noneditable_class: 'mceNonEditable',

@@ -34,7 +34,7 @@ class EntradaType extends AbstractType
     {
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $linkRouteChoices = [];
         $links = $this->principalRepository->findAll();
@@ -94,23 +94,13 @@ class EntradaType extends AbstractType
             ->add('titulo', TextareaType::class,
                 [
                     'required' => true,
-//                    'config' => [
-//                        'uiColor' => '#ffffff',
-//                    'toolbar' => 'full',
-//                        'language' => 'es',
-//                        'input_sync' => true,
-//                    ],
                     'label_attr' => [
                         'class' => 'text-primary',
                     ],
                     'help' => 'Título de la entrada, se muestra en pantalla',
                     'attr' => [
                         'required' => false,
-//                        'rows' => 20,
                         'class' => 'tinymce-editor',
-//                        "toolbar" => "undo redo | accordion accordionremove | blocks fontfamily fontsize | bold italic underline strikethrough | align numlist bullist | link image | table media | lineheight outdent indent| forecolor backcolor removeformat | charmap emoticons | code fullscreen preview | save print | pagebreak anchor codesample | ltr rtl",
-//                        "plugins" => 'preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons accordion',
-//                        "language" => 'es'
                     ],
                 ]
             )
@@ -118,10 +108,6 @@ class EntradaType extends AbstractType
                 'linkRoute',
                 ChoiceType::class,
                 [
-//                    'class' => Principal::class,
-//                    'choice_label' => function (Principal $principal) {
-//                        return sprintf('%s', $principal->getLinkRoute());
-//                    },
                     'choices' => $linkRouteChoices,
                     'required' => false,
                     'help' => 'Link a páginas internas del sistema',
@@ -138,11 +124,6 @@ class EntradaType extends AbstractType
                 TextareaType::class,
                 [
                     'required' => false,
-//                    'config' => [
-//                        'uiColor' => '#ffffff',
-//                    'toolbar' => 'full',
-//                        'language' => 'es',
-//                    ],
                     'label_attr' => [
                         'class' => 'text-primary',
                     ],
@@ -178,13 +159,11 @@ class EntradaType extends AbstractType
                     'mapped' => false,
                     'required' => false,
                     'help' => 'Link a páginas internas del sistema',
-//                    'label'=>'Seleccione Link',
                     'label_attr' => [
                         'class' => 'text-primary',
                     ],
                     'attr' => [
                         'class' => 'select2-enable',
-//                        'placeholder'=>'Seleccione Link',
                     ],
                     'row_attr' => [
                         'class' => 'form-floating',
@@ -229,7 +208,6 @@ class EntradaType extends AbstractType
                 'placeholder' => 'Seleccione día y hora',
                 'html5' => true,
                 'required' => false,
-//                'format' => 'yyyy-MM-dd HH:mm',
                 'attr' => ['class' => 'form-control '],
                 'input' => 'datetime',
             ])
@@ -239,7 +217,6 @@ class EntradaType extends AbstractType
                 'placeholder' => 'Seleccione día y hora',
                 'html5' => true,
                 'required' => false,
-//                'format' => 'yyyy-MM-dd HH:mm',
                 'attr' => ['class' => 'form-control '],
                 'input' => 'datetime',
             ])
@@ -308,15 +285,12 @@ class EntradaType extends AbstractType
                 'widget' => 'single_text',
                 'html5' => true,
                 'required' => false,
-//                'format' => 'yyyy-MM-dd HH:mm',
-//                'attr' => ['class' => 'datetimepicker'],
             ])
             ->add('disponibleHastaAt', DateTimeType::class, [
                 'label' => 'Disponible hasta',
                 'widget' => 'single_text',
                 'html5' => true,
                 'required' => false,
-//                'format' => 'yyyy-MM-dd HH:mm',
                 'attr' => ['class' => 'datetimepicker'],
             ])
             ->add('eventoAt', DateTimeType::class, [
@@ -324,11 +298,9 @@ class EntradaType extends AbstractType
                 'widget' => 'single_text',
                 'html5' => true,
                 'required' => false,
-//                'format' => 'yyyy-MM-dd HH:mm',
                 'attr' => ['class' => 'datetimepicker'],
             ])
 
-//            ->add('section')
             ->add('orden', NumberType::class, [
                     'label' => 'Orden',
                     'label_attr' => [

@@ -2,14 +2,16 @@
 {% block title %}
     Paso 3 - Secciones
 {% endblock %}
+{% block search %}
+{% endblock %}
 {% block stylesheets %}
-{{ parent() }}
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="stylesheet" href="{{ asset('fonts/awesome/web-fonts-with-css/css/all.min.css') }}">
-
-
-{{ encore_entry_link_tags('select2') }}
-
+    {{ parent() }}
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('fonts/awesome/web-fonts-with-css/css/all.min.css') }}">
+    {{ encore_entry_link_tags('select2') }}
+    {{ encore_entry_link_tags('tinymce_config') }}
+    <link rel="stylesheet" href="{{ asset('bundles/tinymce/ext/tinymce/skins/content/default/content.css') }}"
+              integrity="sha256-AgL8yEmNfLtCpH+gYp9xqJwiDITGqcwAbI8tCfnY2lw=" crossorigin="anonymous"/>
 {% endblock %}
 
 {% block contenpage %}
@@ -53,4 +55,13 @@
     {{ parent() }}
     <script src="{{ asset('js/admin_section_form.js') }}"></script>
     {{ encore_entry_script_tags('select2') }}
+
+
+    <script src="{{ asset('bundles/tinymce/ext/tinymce/tinymce.min.js') }}"></script>
+    <script src="{{ asset('bundles/tinymce/ext/tinymce-webcomponent.js') }}"></script>
+    <script src="{{ asset('bundles/tinymce/ext/tinymce/plugins/help/js/i18n/keynav/es.js') }}"></script>
+    <script src="{{ asset('bundles/tinymce/ext/tinymce/skins/content/default/content.js') }}"></script>
+
+
+    {{ encore_entry_script_tags('tinymce_config') }}
 {% endblock %}

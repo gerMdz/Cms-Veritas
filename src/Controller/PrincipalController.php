@@ -8,7 +8,9 @@ use App\Form\SectionAddType;
 use App\Repository\PrincipalRepository;
 use App\Repository\SectionRepository;
 use App\Service\UploaderHelper;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -16,7 +18,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route(path: '/admin/principal')]
 class PrincipalController extends BaseController
@@ -26,7 +29,7 @@ class PrincipalController extends BaseController
     }
 
     #[Route(path: '/', name: 'principal_index', methods: ['GET'])]
-    #[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_ADMIN')]
+    #[IsGranted('ROLE_ADMIN')]
     public function index(PrincipalRepository $principalRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $bus = $request->get('busq');
@@ -37,21 +40,21 @@ class PrincipalController extends BaseController
             15/* limit per page */
         );
 
-        return $this->render('principal/index.html.twig', [
+        return $this->render('admin/principal/index.html.twig', [
             'principals' => $principales,
         ]);
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     #[Route(path: '/new', name: 'principal_new', methods: ['GET', 'POST'])]
-    #[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_ADMIN')]
+    #[IsGranted('ROLE_ADMIN')]
     public function new(Request $request, UploaderHelper $uploaderHelper, EntityManagerInterface $entityManager): Response
     {
         $principal = new Principal();
         $user = $this->getUser();
-        $ahora = new \DateTime('now');
+        $ahora = new DateTime('now');
         $principal->setAutor($user);
         $principal->setCreatedAt($ahora);
         $principal->setUpdatedAt($ahora);
@@ -70,7 +73,7 @@ class PrincipalController extends BaseController
                 $newFilename = $uploaderHelper->uploadEntradaImage($uploadedFile, false);
                 $principal->setImageFilename($newFilename);
             }
-            if (null != $principal->getLinkRoute()) {
+            if (null !== $principal->getLinkRoute()) {
                 $principal->setLinkRoute($principal->getLinkRoute());
             } else {
                 $principal->setLinkRoute($principal->getTitulo());
@@ -78,25 +81,25 @@ class PrincipalController extends BaseController
             $entityManager->persist($principal);
             $entityManager->flush();
 
-            return $this->redirectToRoute('admin');
+            return $this->redirectToRoute('principal_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('principal/new.html.twig', [
+        return $this->render('admin/principal/new.html.twig', [
             'principal' => $principal,
             'form' => $form,
         ]);
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     #[Route(path: '/new-for-assistant', name: 'principal_new_assistant', methods: ['GET', 'POST'])]
-    #[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_ADMIN')]
+    #[IsGranted('ROLE_ADMIN')]
     public function newAssistant(Request $request, UploaderHelper $uploaderHelper, EntityManagerInterface $entityManager): Response
     {
         $principal = new Principal();
         $user = $this->getUser();
-        $ahora = new \DateTime('now');
+        $ahora = new DateTime('now');
         $principal->setAutor($user);
         $principal->setCreatedAt($ahora);
         $principal->setUpdatedAt($ahora);
@@ -115,7 +118,7 @@ class PrincipalController extends BaseController
                 $newFilename = $uploaderHelper->uploadEntradaImage($uploadedFile, false);
                 $principal->setImageFilename($newFilename);
             }
-            if (null != $principal->getLinkRoute()) {
+            if (null !== $principal->getLinkRoute()) {
                 $principal->setLinkRoute($principal->getLinkRoute());
             } else {
                 $principal->setLinkRoute($principal->getTitulo());
@@ -126,17 +129,17 @@ class PrincipalController extends BaseController
             return $this->redirectToRoute('admin');
         }
 
-        return $this->render('principal/newAssistant.html.twig', [
+        return $this->render('admin/principal/newAssistant.html.twig', [
             'principal' => $principal,
             'form' => $form,
         ]);
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     #[Route(path: '/{id}/edit', name: 'principal_edit', methods: ['GET', 'POST'])]
-    #[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_ADMIN')]
+    #[IsGranted('ROLE_ADMIN')]
     public function edit(Request $request, Principal $principal, UploaderHelper $uploaderHelper,
         EntityManagerInterface $entityManager): Response
     {
@@ -160,10 +163,10 @@ class PrincipalController extends BaseController
 
             $entityManager->flush();
 
-            return $this->redirectToRoute('admin');
+            return $this->redirectToRoute('principal_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('principal/edit.html.twig', [
+        return $this->render('admin/principal/edit.html.twig', [
             'principal' => $principal,
             'form' => $form,
         ]);
@@ -177,14 +180,14 @@ class PrincipalController extends BaseController
             $brotes = null;
         }
 
-        return $this->render('principal/show.html.twig', [
+        return $this->render('admin/principal/show.html.twig', [
             'principal' => $principal,
             'brotes' => $brotes,
         ]);
     }
 
     #[Route(path: '/{id}', name: 'principal_delete', methods: ['DELETE'])]
-    #[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_ADMIN')]
+    #[IsGranted('ROLE_ADMIN')]
     public function delete(Request $request, Principal $principal, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$principal->getId(), $request->request->get('_token'))) {
@@ -209,10 +212,17 @@ class PrincipalController extends BaseController
     }
 
     /**
+     * @param Request $request
+     * @param Principal $principal
+     * @param EntityManagerInterface $entityManager
+     * @param SectionRepository $sectionRepository
+     * @param PrincipalRepository $principalRepository
      * @return RedirectResponse|Response
      */
     #[Route(path: '/agregarSeccion/{id}', name: 'principal_agregar_seccion', methods: ['GET', 'POST'])]
-    public function agregarSeccion(Request $request, Principal $principal, EntityManagerInterface $entityManager, SectionRepository $sectionRepository, PrincipalRepository $principalRepository)
+    public function agregarSeccion(Request $request, Principal $principal, EntityManagerInterface $entityManager,
+                                   SectionRepository $sectionRepository,
+                                   PrincipalRepository $principalRepository): RedirectResponse|Response
     {
         $form = $this->createForm(SectionAddType::class);
         $form->handleRequest($request);
@@ -234,7 +244,7 @@ class PrincipalController extends BaseController
             ]);
         }
 
-        return $this->render('principal/vistaAgregaSection.html.twig', [
+        return $this->render('admin/principal/vistaAgregaSection.html.twig', [
             'principal' => $principal,
             'form' => $form,
         ]);

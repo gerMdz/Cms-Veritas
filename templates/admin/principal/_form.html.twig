@@ -40,11 +40,16 @@
                 {{ form_row(form.isLinkExterno) }}
             </label>
         </div>
+        <div class="col-sm-2 text-center form-check text-dark mx-auto">
+            <label for="entrada_isActive">
+                ¿Está activa?<br/>
+            {{ form_row(form.isActive) }}
+            </label>
+        </div>
         <div class="col-sm-4">
             {{ form_row(form.cssClass) }}
-        </div><div class="col-sm-4">
-            {{ form_row(form.isActive) }}
         </div>
+
         <div class="col-sm-6">
             {{ form_label(form.principal) }}
             {{ form_widget(form.principal) }}
@@ -56,8 +61,15 @@
             {{ form_help(form.modelTemplate) }}
         </div>
     </div>
-    <button class="btn btn-primary">{{ button_label|default('Guardar') }}</button>
-    <a href="{{ path('principal_index') }}">Volver al listado</a>
+    <ul class="list-inline mt-4">
+        <li class="list-inline-item">
+            <button class="btn btn-primary">{{ button_label|default('Guardar') }}</button>
+        </li>
+        <li class="list-inline-item">
+            <a class="btn btn-success" href="{{ path('principal_index') }}">Volver al
+                listado</a>
+        </li>
+    </ul>
 </div>
 
 {{ form_end(form) }}

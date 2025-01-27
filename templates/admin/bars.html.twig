@@ -224,6 +224,12 @@
                                 {{ "backend.menu.type_block"|trans }}
                             </a>
                         </li>
+                        <li>
+                            <a href="{{ path('model_template_index') }}">
+                                <i class="fa fa-puzzle-piece" aria-hidden="true"></i>
+                                {{ "backend.menu.model_template"|trans }}
+                            </a>
+                        </li>
 
 
                     </ul>
@@ -243,6 +249,7 @@
             <div class="container-fluid">
                 <div class="nav toggle">
                     <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                    {% block search %}
                     <div class="nav navbar-nav  my-2">
                         <form class="navbar-form ">
                             <div class="input-group no-border">
@@ -255,6 +262,7 @@
                             </div>
                         </form>
                     </div>
+                    {% endblock %}
                 </div>
                 <nav class="nav navbar-nav">
 

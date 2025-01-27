@@ -74,6 +74,7 @@ Encore
     .addEntry('select2', './assets/js/select2.js')
     .addEntry('select2-parent', './assets/js/select2-parent.js')
     .addEntry('select2-entrada', './assets/js/select2-entrada.js')
+    .addEntry('select2-principal', './assets/js/principal_select_section.js')
     .addEntry('tinymce_config', './assets/tinymce/main.js')
     .addEntry('nota_mensaje', './assets/js/nota_mensaje.js')
     .addStyleEntry('loginStyle', './assets/css/styles.css')
