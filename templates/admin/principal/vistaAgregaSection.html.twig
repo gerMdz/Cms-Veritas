@@ -1,3 +1,6 @@
+
+    {{ encore_entry_link_tags('select2-principal') }}
+
 {{ form_start(form, {'action' : path('principal_agregar_seccion', { 'id': principal.id })}) }}
 <div class="modal-header panel-info">
     <h5 class="modal-title" id="exampleModalLabel">Agregar Sección </h5>
@@ -10,7 +13,7 @@
         <div class="card-body">
 
             <div class="col-sm-12 p-0">
-                <label for="{{ form.section.vars.id}}" class="label text-dark">
+                <label for="{{ form.section.vars.id }}" class="label text-dark">
                     <i class="fa fa-list"> </i> Sección
                 </label>
                 {{ form_widget(form.section) }}
@@ -30,3 +33,5 @@
     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
 </div>
 {{ form_end(form, {'render_rest': false}) }}
+
+    {{ encore_entry_script_tags('select2-principal') }}

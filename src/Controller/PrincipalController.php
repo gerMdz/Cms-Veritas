@@ -163,7 +163,7 @@ class PrincipalController extends BaseController
 
             $entityManager->flush();
 
-            return $this->redirectToRoute('admin');
+            return $this->redirectToRoute('principal_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('admin/principal/edit.html.twig', [

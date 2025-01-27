@@ -1,24 +1,35 @@
-{% extends '../../base_admin_board.html.twig' %}
+{% extends "admin/bars.html.twig" %}
+{% block search %}
+{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
-    <!-- CSS Files -->
-    <link href="{{ asset('/asistente/css/bootstrap.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('/asistente/css/material-bootstrap-wizard.css') }}" rel="stylesheet" />
+    {{ encore_entry_link_tags('select2') }}
+    {{ encore_entry_link_tags('tinymce_config') }}
+    <link rel="stylesheet" href="{{ asset('bundles/tinymce/ext/tinymce/skins/content/default/content.css') }}"
+          integrity="sha256-AgL8yEmNfLtCpH+gYp9xqJwiDITGqcwAbI8tCfnY2lw=" crossorigin="anonymous"/>
 
-    <!-- CSS Just for demo purpose, don't include it in your project -->
-    <link href="{{ asset('/asistente/css/bootstrap.min.css') }}" rel="stylesheet" />
+
 {% endblock %}
 
 {% block title %}Asistente para Crear Página Principal {% endblock %}
-{% block nav %}
-    {{ include('admin/_nav.html.twig',  {'marca_label': 'entrada'}) }}
-{% endblock %}
-{% block content %}
+{#{% block nav %}#}
+{#    {{ include('admin/_nav.html.twig',  {'marca_label': 'entrada'}) }}#}
+{#{% endblock %}#}
+{% block contenpage %}
     <h5>Asistente para crear una nueva página Principal</h5>
 
-    {{ include('principal/_form.html.twig') }}
+    {{ include('admin/principal/_form.html.twig') }}
 
     <a href="{{ path('principal_index') }}">Volver al listado</a>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('select2') }}
+    <script src="{{ asset('bundles/tinymce/ext/tinymce/tinymce.min.js') }}"></script>
+    <script src="{{ asset('bundles/tinymce/ext/tinymce-webcomponent.js') }}"></script>
+    {#    <script src="{{ asset('bundles/tinymce/ext/tinymce/plugins/help/js/i18n/keynav/es.js') }}"></script>#}
+    <script src="{{ asset('bundles/tinymce/ext/tinymce/skins/content/default/content.js') }}"></script>
+    {{ encore_entry_script_tags('tinymce_config') }}
 {% endblock %}
 {% block jslocal %}
 
